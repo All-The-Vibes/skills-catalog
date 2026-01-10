@@ -1,0 +1,79 @@
+# Agent-specific directories (but keep .claude/skills/ which is the main content!)
+# Ignore .claude/ except for skills directory
+.claude/*
+!.claude/skills/
+.vscode/
+.cursor/
+.windsurf/
+
+# Beads backlog system - local state only, not for version control
+.beads/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor backups
+*~
+*.swp
+*.swo
+.*.swp
+.*.swo
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+*.backup
+*.bak
+
+# Node.js (if used for tooling)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Python (if used for tooling)
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+*.so
+.env
+.venv
+venv/
+ENV/
+
+# Rust/Cargo (for bd/beads development)
+target/
+Cargo.lock
+
+# IDEs
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
+
+# Test artifacts
+coverage/
+.coverage
+*.cover
+.pytest_cache/
+
+# Build artifacts
+dist/
+build/
+
+# Documentation build
+site/
+_site/
+
+# Miscellaneous
+.cache/
+*.pid
