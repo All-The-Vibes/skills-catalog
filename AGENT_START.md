@@ -154,6 +154,11 @@ echo "Does the remote have existing content you want to pull?"
 - **Skills Directory:** `.claude/skills/`
 - **Why:** Claude Code uses this standard location
 
+**Set variable:**
+```bash
+SKILLS_CHOICE=".claude/skills"
+```
+
 ### For GitHub Copilot:
 **Ask the user:**
 
@@ -162,11 +167,21 @@ echo "Does the remote have existing content you want to pull?"
 - **`.claude/skills/`** (Cross-platform, works with Claude Code too)
 - **Both** (maximum compatibility, skills will be copied to both locations)
 
-**Record answer:** `[SKILLS_DIR]`
+**Record answer and set variable:**
+```bash
+# Set based on user's choice:
+# ".claude/skills" or ".github/skills" or "both"
+SKILLS_CHOICE="[user's choice]"
+```
 
 ### For Cursor:
 - **Skills Directory:** `.claude/skills/`
 - **Why:** Cursor uses the Claude Code standard
+
+**Set variable:**
+```bash
+SKILLS_CHOICE=".claude/skills"
+```
 
 ### For Other:
 - **Skills Directory:** `.claude/skills/`
@@ -174,6 +189,7 @@ echo "Does the remote have existing content you want to pull?"
 
 **Set variable:**
 ```bash
+SKILLS_CHOICE=".claude/skills"
 SKILLS_DIR="[determined above]"
 ```
 
@@ -400,6 +416,32 @@ curl -fsSL "$BASE_URL/AGENTS.md" -o AGENTS.md
 1. Backup existing: `mv AGENTS.md AGENTS.md.backup.$(date +%s)`
 2. Download new version
 3. Inform user: "Your old AGENTS.md is backed up as AGENTS.md.backup.[timestamp]"
+
+### Transform Paths Based on Skills Directory Choice
+
+**After downloading AGENTS.md, update paths based on user's choice in Step 3:**
+
+```bash
+# Transform paths based on user's skills directory choice
+if [ "$SKILLS_CHOICE" = ".github/skills" ]; then
+  # User chose ONLY .github/skills/
+  # Replace all /.claude/skills/ paths with /.github/skills/
+  sed -i 's|/.claude/skills/|/.github/skills/|g' AGENTS.md
+  echo "✅ Updated AGENTS.md paths to use .github/skills/"
+  
+elif [ "$SKILLS_CHOICE" = "both" ]; then
+  # User chose BOTH directories
+  # Add a note at the beginning indicating both locations exist
+  # Keep paths as /.claude/skills/ (the cross-platform default)
+  sed -i '/^# Agent Instructions/a\
+\
+> **📍 Skills Location:** This project has skills installed in both `/.claude/skills/` AND `/.github/skills/` for maximum compatibility. Links below use `/.claude/skills/` but both locations contain identical skills.\
+' AGENTS.md
+  echo "✅ Added dual-location note to AGENTS.md"
+
+fi
+# If user chose .claude/skills/ → no changes needed, keep original paths
+```
 
 ---
 
