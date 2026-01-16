@@ -193,7 +193,8 @@ which bd && bd --version
 
 ```bash
 # Method 1: Direct installation script (recommended)
-curl -fsSL https://raw.githubusercontent.com/ezrasingh/beads/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/steveyegge/beads/main/scripts/install.sh | bash
+
 
 # Method 2: Using Cargo (if Rust installed)
 cargo install beads-cli
